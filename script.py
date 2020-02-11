@@ -44,11 +44,11 @@ def processText(text):
 
 #%% get weather data  and preprocess before constructing word Cloud
         
-weatherdata = data[['Temperature(F)','Weather_Condition']].dropna()
-weatherdata['Weather_Condition'] = weatherdata.Weather_Condition.apply(processText)
+weatherdata = data['Weather_Condition'].dropna()
+weatherdata = weatherdata.apply(processText)
 
 #%% Bar Graph
-weather = weatherdata.groupby('Weather_Condition').size().reset_index(name='Count').set_index('Weather_Condition').sort_values(by='Count',ascending=False)
+weather = weatherdata.groupby(weatherdata).size().reset_index(name='Count').set_index('Weather_Condition').sort_values(by='Count',ascending=False)
 top_10_reasons = weather.head(n=10)
 
 fig = plt.figure(figsize=(15,10))
